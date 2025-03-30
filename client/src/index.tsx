@@ -10,11 +10,13 @@ const App: React.FC = () => {
   return (
     <StoryProvider>
       <Container>
+        
         <StoryContainer/>
-        <span>INSTAGRAM</span>
+        <span>Vibegram</span>
         <ViewStory />
         <div>
           {storiesData.map((item)=>(
+            
             <div>
               <img className='feed-images'
                src={item.url}  key={item.url} alt={item.url} />

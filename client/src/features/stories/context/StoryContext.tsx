@@ -9,6 +9,8 @@ type StoryContextType = {
     currentIndex: number;
     setCurrentIndex: (value: number) => void;
     totalStories: number;
+    currentUser: any | null;
+    setCurrentUser: (value: any | null) => void;
 };
 
 const StoryContext = createContext<StoryContextType | undefined>(undefined);
@@ -17,8 +19,9 @@ export const StoryProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const [isOpen, setIsOpen] = useState(false);
     const [image, setImage] = useState('');
     const [currentIndex, setCurrentIndex] = useState(-1);
+    const [currentUser, setCurrentUser] = useState(null);
     return (
-        <StoryContext.Provider value={{ isOpen,totalStories: storiesData.length, setIsOpen, image, setImage, currentIndex, setCurrentIndex }}>
+        <StoryContext.Provider value={{ isOpen,totalStories: storiesData.length, setIsOpen,currentUser, setCurrentUser, image, setImage, currentIndex, setCurrentIndex }}>
             {children}
         </StoryContext.Provider>
     );

@@ -1,19 +1,29 @@
 
 
 [
-    {
-        "url": "https://picsum.photos/200/300"
+    {   "user_name": "John",
+        "stories":[ {"url": "https://picsum.photos/200/300"},{"url": "https://picsum.photos/200/1000"}]
+       
     },
-    {
-        "url": "https://picsum.photos/200/400"
+    {   "user_name": "Jane",
+        "stories":[ {"url": "https://picsum.photos/200/400"},{"url": "https://picsum.photos/200/400"}]
     },
-    {
-        "url": "https://picsum.photos/200/500"
+    {   "user_name": "John",
+        "stories":[ {"url": "https://picsum.photos/200/500"},{"url": "https://picsum.photos/200/500"}]
     },
-    {
-        "url": "https://picsum.photos/200/600"
+    {   "user_name": "Jane",
+        "stories":[ {"url": "https://picsum.photos/200/600"},{"url": "https://picsum.photos/200/600"}]
     },
-    {
-        "url": "https://picsum.photos/200/700"
+    {   "user_name": "John",
+        "stories":[ {"url": "https://picsum.photos/200/700"},{"url": "https://picsum.photos/200/700"}]
+    },
+    {   "user_name": "Jane",
+        "stories":[ {"url": "https://picsum.photos/200/800"},{"url": "https://picsum.photos/200/800"}]
+    },
+    {   "user_name": "John",
+        "stories":[ {"url": "https://picsum.photos/200/900"},{"url": "https://picsum.photos/200/900"}]
+    },
+    {   "user_name": "Jane",
+        "stories":[ {"url": "https://picsum.photos/200/1000"},{"url": "https://picsum.photos/200/1000"}]
     }
 ]

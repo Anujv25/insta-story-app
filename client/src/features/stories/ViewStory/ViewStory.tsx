@@ -1,69 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useStoryContext } from '../context/StoryContext';
+import ProgressBar from '../../../components/ProgressBar/ProgressBar';
 import storiesData from '../../../utils/StoryData.json';
-
 const ViewStory: React.FC = () => {
-    const { image, setImage, isOpen, currentIndex, setCurrentIndex } = useStoryContext();
-    const [progress, setProgress] = useState(0);
-    const [nextImage, setNextImage] = useState('');
+    const { image,isOpen, setImage, currentUser,setCurrentUser,currentIndex,setCurrentIndex} = useStoryContext();
+    const [innerIndex, setInnerIndex] = useState(0);
+   const [user_stories, setUser_stories] = useState<any[]>([]);
+    useEffect(()=>{
+       if(currentUser?.stories){
+        console.log(currentUser.stories)
+        setUser_stories(currentUser.stories);
+        setImage(currentUser.stories[0].url);
+        setInnerIndex(0);
+       }
+    },[currentUser])
 
-   //use preload image
 
-   useEffect(()=>{
-    if(currentIndex<storiesData.length-1){
-        const nextImageUrl=storiesData[currentIndex+1].url;
-        const img=new Image();
-        img.src=nextImageUrl;
-        img.onload=()=>{
-            setNextImage(nextImageUrl);
-        }
-    }
-   })
-    useEffect(() => {
-        if (!image) return;
-
-        const duration = 3000; // 3 seconds
-        const interval = 10; // Update every 10ms
-        const steps = duration / interval;
-        const increment = 100/steps;
-
-        const progressTimer = setInterval(() => {
-            setProgress(prev => {
-                if(prev >= 100) {
-                    clearInterval(progressTimer);
-                    return 100;
-                }
-                return prev + increment;
-            });
-        }, interval);
-
-        const closeTimer = setTimeout(() => {
-            setProgress(0);
-            setImage('');
-            if(currentIndex < storiesData.length - 1) {
-                const nextIndex = currentIndex + 1;
-                setCurrentIndex(nextIndex);
-                // Use preloaded image if available
-                setImage(nextImage || storiesData[nextIndex].url);
+    useEffect(()=>{
+        if(!isOpen) return;
+        const timer = setTimeout(()=>{
+            if(innerIndex < user_stories.length-1){
+                setImage(user_stories[innerIndex+1].url);
+                setInnerIndex(prev=>prev+1);
+                console.log(innerIndex)
             }
-        }, duration);
+            else{
+                if(currentIndex<storiesData.length){
+                    setCurrentUser(storiesData[currentIndex+1])
+                    console.log("YYYYE")
+                }
+                else{
+                   setCurrentUser(null)
+                }
 
-        return () => {
-            clearTimeout(closeTimer);
-            clearInterval(progressTimer);
-        };
-    }, [image, setImage, currentIndex, setCurrentIndex, nextImage]);
+            }
+        },3000)
 
-    if (!image) return null;
+        return ()=>{clearTimeout(timer)};
+        
+    },[user_stories,innerIndex])
+
+
+
+    if (!currentUser || !isOpen) return null;
 
     return (
         <div className="view-story">
-            <div className="progress-bar">
-                <div 
-                    className="progress-bar-fill"
-                    style={{ width: `${progress}%`, height: '10px' }}
-                />
-            </div>
+            <ProgressBar duration={3000} toggleProgressBar={innerIndex==0} />
             <img 
                 src={image} 
                 className="story-image-main" 
@@ -74,4 +57,4 @@ const ViewStory: React.FC = () => {
     );
 };
 
-export default ViewStory;
+export default React.memo(ViewStory);
